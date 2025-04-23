@@ -6,34 +6,24 @@ function Actors() {
 
   useEffect(() => {
     fetch("http://localhost:4000/actors")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch actors");
-        }
-        return res.json();
-      })
-      .then((data) => setActors(data))
-      .catch((error) => console.error("Error fetching actors:", error));
+      .then(r => r.json())
+      .then(setActors);
   }, []);
 
   return (
     <>
-      <header>
-        <NavBar />
-      </header>
-      <main>
-        <h1>Actors Page</h1>
-        {actors.map((actor) => (
-          <article key={actor.id}>
-            <h2>{actor.name}</h2>
-            <ul>
-              {actor.movies.map((movie, index) => (
-                <li key={index}>{movie}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </main>
+      <NavBar />
+      <h1>Actors Page</h1>
+      {actors.map((actor, index) => (
+        <article key={index}>
+          <h2>{actor.name}</h2>
+          <ul>
+            {actor.movies.map((title, i) => (
+              <li key={i}>{title}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </>
   );
 }

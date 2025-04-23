@@ -5,35 +5,25 @@ function Directors() {
   const [directors, setDirectors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/directors") 
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch directors");
-        }
-        return res.json();
-      })
-      .then((data) => setDirectors(data))
-      .catch((error) => console.error("Error fetching directors:", error));
+    fetch("http://localhost:4000/directors")
+      .then(r => r.json())
+      .then(setDirectors);
   }, []);
 
   return (
     <>
-      <header>
-        <NavBar />
-      </header>
-      <main>
-        <h1>Directors Page</h1>
-        {directors.map((director) => (
-          <article key={director.id}>
-            <h2>{director.name}</h2>
-            <ul>
-              {director.movies.map((movie, index) => (
-                <li key={index}>{movie}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
-      </main>
+      <NavBar />
+      <h1>Directors Page</h1>
+      {directors.map((director, index) => (
+        <article key={index}>
+          <h2>{director.name}</h2>
+          <ul>
+            {director.movies.map((title, i) => (
+              <li key={i}>{title}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
     </>
   );
 }
